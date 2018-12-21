@@ -40,19 +40,19 @@ while (	$rs = mysqli_fetch_assoc($result)) {
     if($role==1)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
     else
-        echo "</td><td></td>";
+        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
     if($role==2)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
     else
-        echo "</td><td></td>";
+        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
     if($role==3)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
     else
-        echo "</td><td></td>";
+        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
     if($role==4)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
     else
-        echo "</td><td></td>";
+        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
 //echo '<td><a href="03.delete.php?id=', $rs['id'], '">刪</a> </td></tr>';
 // $id=$rs['prdID'];
 // echo "<td><a href='add2Cart.php?id=$id'>加</a>";
@@ -61,7 +61,7 @@ while (	$rs = mysqli_fetch_assoc($result)) {
 }
 ?>
 </table>
-<a class="btn-floating btn-large waves-effect waves-light red right"><i class="material-icons">add</i></a>
+<a class="btn-floating btn-large waves-effect waves-light red lighten-2 right"><i class="material-icons">add</i></a>
 <!-- <a href="showOrder.php">show all orders</a> -->
 </body>
 </html>
