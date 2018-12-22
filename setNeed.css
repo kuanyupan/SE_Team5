@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+table.settable{
+
+  width: 80%;
+	border: #f6bb9e 2px solid;
+	border-collapse: collapse;
+
+
+}
+
+.settable input{
+
+
+
+
+
+
+}
+.settable input:focus{
+
+  background-color: rgb(217, 218, 174) ;
+
+
+
+}
