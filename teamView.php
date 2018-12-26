@@ -2,7 +2,6 @@
 require("teamModel.php");
 //checkLogin();
 $result=getTeamList();
-
 ?>
 
 <!-- Compiled and minified CSS -->
@@ -30,38 +29,50 @@ $result=getTeamList();
     <td>Distributor</td>
     <td>Wholesaler</td>
     <td>Retailer</td>
+    <td></td>
     <!-- <td><img src="boy.png"></td> -->
   </tr>
 <?php
 
 while (	$rs = mysqli_fetch_assoc($result)) {
-    $role=$rs['role'];
+    
+    $p1 = getRole1Img($rs['tid']);
+    $p2 = getRole2Img($rs['tid']);
+    $p3 = getRole3Img($rs['tid']);
+    $p4 = getRole4Img($rs['tid']);
+    
     echo "<tr><td>" , $rs['name'];
-    if($role==1)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
+    if($rs['role1'] != null)
+        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p1."'></td>";
     else
-        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
-    if($role==2)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
+        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+    if($rs['role2'] != null)
+        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p2."'></td>";
     else
-        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
-    if($role==3)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
+        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+    if($rs['role3'] != null)
+        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p3."'></td>";
     else
-        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
-    if($role==4)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$rs['imgURL']."'>";
+        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+    if($rs['role4'] != null)
+        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p4."'></td>";
     else
-        echo "</td><td><a class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td>";
+        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+
+    $teamname = $rs['name'];
+    $tid = $rs['tid'];
+    echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
+}
 //echo '<td><a href="03.delete.php?id=', $rs['id'], '">刪</a> </td></tr>';
 // $id=$rs['prdID'];
 // echo "<td><a href='add2Cart.php?id=$id'>加</a>";
 // echo " - <a href='04.editform.php?id=$id'>改</a> </td></tr>";
-
-}
 ?>
 </table>
-<a class="btn-floating btn-large waves-effect waves-light red lighten-2 right"><i class="material-icons">add</i></a>
+<button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">NEW
+    <i class="material-icons right">add</i>
+</button>
+<!-- <a class="btn-floating btn-large waves-effect waves-light red lighten-2 right"><i class="material-icons">add</i></a> -->
 <!-- <a href="showOrder.php">show all orders</a> -->
 </body>
 </html>
