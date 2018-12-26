@@ -1,6 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<link href="../css/setNeed.css"rel="stylesheet" href="style.css">
+<link rel="stylesheet" type="text/css" href="setNeed.css" >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
   <title>Document</title>
 
   <SCRIPT LANGUAGE="JavaScript">
+
 function rand()
 {
   var o=document.getElementsByTagName('input');
@@ -31,9 +33,8 @@ function rand()
 </head>
 <body>
 <h1>50期需求</h1>
-
-
-  <table  class="settable">
+<form action="" >
+<table  class="settable">
 <tr>
 <th>1</th>
  <td  ><input type="number" name="1s"  style="padding: 20px 10px; line-height: 28px;width: 50px;" min="0" max="50" value="0" ></td>
