@@ -1,0 +1,45 @@
+html, body {
+    height:100%;
+    width: 100%;
+    margin:0;
+    letter-spacing: 3px;
+    line-height: 30px;
+}
+h6{
+    margin-left: 300px;
+}
+#menu{
+    float: left;
+    height: 100%;
+    width: 12%; 
+    color: rgb(141, 160, 160);
+    background-color: rgb(233, 233, 233);
+}
+#text{
+    margin-left: 300px;
+    border-style:dotted;
+    border-width: 2px;
+}
+#name{
+    padding-left: 200px;
+}
+#period{
+    width: 30%;
+    padding-top: 50px;
+    margin-left: 100px;
+}
+#order{
+    width: 30%;
+    padding-top: 50px;
+    padding-left: 100px;
+}
+#figure{
+    padding: 10px;
+}
+#table{
+    overflow-y: scroll;
+    margin-left: 300px;
+    padding-top: 20px;
+    width: 75%;
+    height: 300px;
+}
