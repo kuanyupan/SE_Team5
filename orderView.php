@@ -1,11 +1,7 @@
 <?php
-    require_once("dbconfig.php");
+    require_once("orderModel.php");
     global $db;
-    $sql = "select * from characters, orderform where characters.cID = orderform.cID and characters.cID=1";
-    $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
+    $cid = 1;
     $character = "factory";// 先假設為工廠
 ?>
 <!DOCTYPE html>
@@ -27,12 +23,13 @@
         </div>
         <div class="list-group">
             <a href="#" class="list-group-item" font-size="12pt" color="darkcyan">Menu</a>
-            <a href="teamView.php" class="list-group-item list-group-item-action">回主選單</a>
+            <a href="#" class="list-group-item list-group-item-action">回主選單</a>
             <a href="#" class="list-group-item list-group-item-action">離開遊戲</a>
+            <!-- <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a> -->
         </div>
     </div>
     <div id="name">
-        玩家: user <!-- <?php echo $user ?> -->
+        玩家: role <!-- <?php echo $role ?> -->
         角色: <?php echo $character ?>
     </div>
     <hr/>
@@ -46,15 +43,15 @@
             </div>
             <div class="col-sm" id="order">
                 第$term/50期:<br />
-                <form method="post" action="">
+                <form method="post" action="order.php">
                     訂購量:
                     <input type="text" name="num"><br />
                     <input type="submit" value="下單">
                 </form>
             </div>
             <div class="col-sm" id="figure">
-                <img src="http://photo.pchome.com.tw/imgdata/czo2NDoiMXQ5VWErc1NmWDEvNDY2MEl4MkIwVkJ5S2dqMVJRZm93RHc3b2pHcEY3SnlTalY0cnVxM3ZxQWp6cTFLb1h6SyI7.jpg" height="250">
-                <!-- <img src="http://photocdn.sohu.com/20160126/mp56562445_1453806431784_9.jpeg" height="250"> -->
+                <img src="smile.png" height="250">
+                <!-- <img src="angry.png" height="250"> -->
                 <div id="box"></div>
             </div>
         </div>
@@ -81,6 +78,7 @@
             </thead>
             <tbody>
                 <?php
+                    $result = ordList();
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
                         $cumulativecost += $rs['currentcost'];
