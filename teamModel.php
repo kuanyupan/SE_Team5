@@ -15,10 +15,10 @@ function getTeamList()
 function getRole1Img(int $tid) 
 {
     global $db;
-    $rs = mysqli_fetch_assoc(getTeamList());
-    while($rs) {
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
         if($rs['tid'] == $tid) {
-            $r1 = $rs['role1'];
+            $r1 = $rs['f'];
             $sql =  "select user.imgURL from user where $r1 = user.uid";
 
             $stmt = mysqli_prepare($db, $sql);
@@ -35,10 +35,10 @@ function getRole1Img(int $tid)
 function getRole2Img(int $tid) 
 {
     global $db;
-    $rs = mysqli_fetch_assoc(getTeamList());
-    while($rs) {
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
         if($rs['tid'] == $tid) {
-            $r2 = $rs['role2'];
+            $r2 = $rs['d'];
             $sql =  "select user.imgURL from user where $r2 = user.uid";
 
             $stmt = mysqli_prepare($db, $sql);
@@ -53,10 +53,11 @@ function getRole2Img(int $tid)
 function getRole3Img(int $tid) 
 {
     global $db;
-    $rs = mysqli_fetch_assoc(getTeamList());
-    while($rs) {
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
         if($rs['tid'] == $tid) {
-            $r3 = $rs['role3'];
+            $r3 = $rs['w'];
+            
             $sql =  "select user.imgURL from user where $r3 = user.uid";
 
             $stmt = mysqli_prepare($db, $sql);
@@ -71,10 +72,10 @@ function getRole3Img(int $tid)
 function getRole4Img(int $tid) 
 {
     global $db;
-    $rs = mysqli_fetch_assoc(getTeamList());
-    while($rs) {
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
         if($rs['tid'] == $tid) {
-            $r4 = $rs['role4'];
+            $r4 = $rs['r'];
             $sql =  "select user.imgURL from user where $r4 = user.uid";
 
             $stmt = mysqli_prepare($db, $sql);

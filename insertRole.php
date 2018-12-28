@@ -2,7 +2,6 @@
 require("teamModel.php");
 //checkLogin();
 $result=getTeamList();
-$rs = mysqli_fetch_assoc($result);
 ?>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -26,35 +25,48 @@ require('dbconfig.php');
 $role = $_POST['role'];
 $tid = $_GET['tid'];
 // $teamname = $_GET['teamname'];
-$uid = 001;
+$uid = 002;
+while($rs = mysqli_fetch_assoc($result)) {
+	if ($role == 1 && $rs['f'] == 0 && $rs['tid'] == $tid) {
+		$sql = "update team set f = $uid where tid=$tid";
+		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
+		mysqli_stmt_execute($stmt);  //執行SQL
+		echo "role1 added.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 1 && $rs['f'] != 0 && $rs['tid'] == $tid){
+		echo "role1 isn't empty, please choose again.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 2 && $rs['d'] == 0 && $rs['tid'] == $tid) {
+		$sql = "update team set d = $uid where tid=$tid";
+		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
+		mysqli_stmt_execute($stmt);  //執行SQL
+		echo "role2 added.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 2 && $rs['d'] != 0 && $rs['tid'] == $tid) {
+		echo "role2 isn't empty, please choose again.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 3 && $rs['w'] == 0 && $rs['tid'] == $tid) {
+		$sql = "update team set w = $uid where tid=$tid";
+		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
+		mysqli_stmt_execute($stmt);  //執行SQL
+		echo "role3 added.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 3 && $rs['w'] != 0 && $rs['tid'] == $tid) {
+		echo "role3 isn't empty, please choose again.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 4 && $rs['r'] == 0 && $rs['tid'] == $tid) {
+		$sql = "update team set r = $uid where tid=$tid";
+		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
+		mysqli_stmt_execute($stmt);  //執行SQL
+		echo "role4 added.";
+		header("refresh:1 ; url=teamView.php");
+	} else if ($role == 4 && $rs['r'] != 0 && $rs['tid'] == $tid) {
+		echo "role4 isn't empty, please choose again.";
+		header("refresh:1 ; url=teamView.phps");
+	}
+}
+	
 
-if ($role == 1) {
-	$sql = "update team set role1 = $uid where tid=$tid";
-	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
-	mysqli_stmt_execute($stmt);  //執行SQL
-	echo "role1 added.";
-}
-else if ($role == 2) {
-	$sql = "update team set role2 = $uid where tid=$tid";
-	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
-	mysqli_stmt_execute($stmt);  //執行SQL
-	echo "role2 added.";
-}
-else if ($role == 3) {
-	$sql = "update team set role3 = $uid where tid=$tid";
-	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
-	mysqli_stmt_execute($stmt);  //執行SQL
-	echo "role3 added.";
-}
-else if ($role == 4) {
-	$sql = "update team set role4 = $uid where tid=$tid";
-	$stmt = mysqli_prepare($db, $sql); //prepare sql statement
-	mysqli_stmt_execute($stmt);  //執行SQL
-	echo "role4 added.";
-}
-else {
-	echo "cannot update!";
-}
 ?>
 <!-- <a href="./">回首頁</a> -->
 </body>

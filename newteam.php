@@ -16,7 +16,7 @@
     <td>RoleC</td>
     <td>RoleD</td>
   </tr>
-  <tr><form method="post" action="addroom.php">
+  <tr><form method="post" action="insertTeam.php">
     <td><label>
       <input name="name" type="text" id="name" />
     </label></td>

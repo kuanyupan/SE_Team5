@@ -33,33 +33,32 @@ $result=getTeamList();
     <!-- <td><img src="boy.png"></td> -->
   </tr>
 <?php
-
-while (	$rs = mysqli_fetch_assoc($result)) {
+while ($rs = mysqli_fetch_assoc($result)) {
     
     $p1 = getRole1Img($rs['tid']);
     $p2 = getRole2Img($rs['tid']);
     $p3 = getRole3Img($rs['tid']);
     $p4 = getRole4Img($rs['tid']);
-    
-    echo "<tr><td>" , $rs['name'];
-    if($rs['role1'] != null)
+
+    echo "<tr><td>" , $rs['tname'];
+    if($rs['f'] != null)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p1."'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['role2'] != null)
+    if($rs['d'] != null)
         echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p2."'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['role3'] != null)
+    if($rs['w'] != null)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p3."'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['role4'] != null)
+    if($rs['r'] != null)
         echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p4."'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
 
-    $teamname = $rs['name'];
+    $teamname = $rs['tname'];
     $tid = $rs['tid'];
     echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
 }
@@ -69,9 +68,9 @@ while (	$rs = mysqli_fetch_assoc($result)) {
 // echo " - <a href='04.editform.php?id=$id'>改</a> </td></tr>";
 ?>
 </table>
-<button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">NEW
+<a href='newteam.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">NEW
     <i class="material-icons right">add</i>
-</button>
+</button></a>
 <!-- <a class="btn-floating btn-large waves-effect waves-light red lighten-2 right"><i class="material-icons">add</i></a> -->
 <!-- <a href="showOrder.php">show all orders</a> -->
 </body>

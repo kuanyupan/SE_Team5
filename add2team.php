@@ -1,8 +1,13 @@
 <?php
 require("teamModel.php");
 //checkLogin();
-$result=getTeamList();
-$rs = mysqli_fetch_assoc($result);
+$result = getTeamList();
+$tid = $_GET['tid'];
+while($rs = mysqli_fetch_assoc($result)) {
+    if($rs['tid'] == $tid && $rs['f'] != 0 && $rs['d'] != 0 && $rs['w'] != 0 && $rs['r'] != 0) {
+        echo '<script language="JavaScript">;alert("team is full!");location.href="teamView.php";</script>;';
+    }
+}
 ?>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
