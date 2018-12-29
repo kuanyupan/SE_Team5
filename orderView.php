@@ -2,7 +2,7 @@
     require_once("orderModel.php");
     global $db;
     $cid = 1;
-    $period = term($cid);
+    $currentperiod = term($cid)+1;
     $character = "factory";// 先假設為工廠
     ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
         角色: <?php echo $character ?>
     </div>
     <hr/>
-    <h6>請輸入第<?php echo $period; ?>期訂購量</h6>
+    <h6>請輸入第<?php echo $currentperiod; ?>期訂購量</h6>
     <div class="container" id="text">
         <div class="row">
             <div class="col col-lg-2" id="period">
@@ -42,7 +42,7 @@
                 總期數: 50期<br />
             </div>
             <div class="col-sm" id="order">
-                第<?php echo $period; ?>/50期:<br />
+                第<?php echo $currentperiod; ?>/50期:<br />
                 <form method="post" action="order.php">
                     訂購量:
                     <input type="text" name="num"><br />
