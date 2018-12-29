@@ -2,8 +2,9 @@
     require_once("orderModel.php");
     global $db;
     $cid = 1;
+    $period = term($cid);
     $character = "factory";// 先假設為工廠
-?>
+    ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,6 @@
             <a href="#" class="list-group-item" font-size="12pt" color="darkcyan">Menu</a>
             <a href="#" class="list-group-item list-group-item-action">回主選單</a>
             <a href="#" class="list-group-item list-group-item-action">離開遊戲</a>
-            <!-- <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a> -->
         </div>
     </div>
     <div id="name">
@@ -33,7 +33,7 @@
         角色: <?php echo $character ?>
     </div>
     <hr/>
-    <h6>請輸入第$term期訂購量</h6>
+    <h6>請輸入第<?php echo $period; ?>期訂購量</h6>
     <div class="container" id="text">
         <div class="row">
             <div class="col col-lg-2" id="period">
@@ -42,7 +42,7 @@
                 總期數: 50期<br />
             </div>
             <div class="col-sm" id="order">
-                第$term/50期:<br />
+                第<?php echo $period; ?>/50期:<br />
                 <form method="post" action="order.php">
                     訂購量:
                     <input type="text" name="num"><br />
@@ -50,8 +50,18 @@
                 </form>
             </div>
             <div class="col-sm" id="figure">
-                <img src="smile.png" height="250">
-                <!-- <img src="angry.png" height="250"> -->
+                <?php
+                    $result = ordList($cid);
+                    $sumcost = 0;
+                    while ($rs1 = mysqli_fetch_assoc($result)) {
+                        $sumcost += $rs1['currentcost'];
+                    }
+                    if($sumcost < 0) {
+                        echo "<img src='angry.png'\ height=\"250\">";
+                    }else{
+                        echo "<img src='smile.png'\ height=\"250\">";
+                    }
+                    ?>
                 <div id="box"></div>
             </div>
         </div>
@@ -78,11 +88,11 @@
             </thead>
             <tbody>
                 <?php
-                    $result = ordList();
+                    $result = ordList($cid);
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
                         $cumulativecost += $rs['currentcost'];
-                        echo "<tr><th scope='\row'\>" , $rs['term'] ,
+                        echo "<tr><th scope='\row'\>" , $rs['period'] ,
                         "</th><td>" , $rs['quantity'],
                         "</td><td>" , $rs['arrival'],
                         "</td><td>" , $rs['inventory'],
