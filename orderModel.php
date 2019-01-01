@@ -1,64 +1,196 @@
 <?php
 require_once("dbconfig.php");
-function ordList() 
-{
+function ordList($tid, $cid) {
     global $db;
-    $sql = "select * from orderform";
+    $sql = "select * from orderform where tid = ? and cid = ?";
     $stmt = mysqli_prepare($db, $sql);
-    //mysqli_stmt_bind_param($stmt, "ss", $id, $pwd);
+    mysqli_stmt_bind_param($stmt, "ii", $tid, $cid);
     mysqli_stmt_execute($stmt); //執行SQL
     $result = mysqli_stmt_get_result($stmt); 
     return $result;
 }
-function addOrder($cid,$term) {
+function addOrder($tid,$cid,$period) {
     global $db;
-    $sql = "insert into orderform (cid,term) values (?,?)";
+    $sql = "insert into orderform (tid,cid,period) values (?,?,?)";
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "ii",$cid, $term);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
     mysqli_stmt_execute($stmt); //執行SQL
     return;
 }
-function term($cid) {
+function period($tid,$cid) {
     global $db;
-    $sql = "select max(term) as currentTerm from orderform where cid = ?";
+    $sql = "select max(period) as currentperiod from orderform where tid = ? and cid = ?";
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $cid);
+    mysqli_stmt_bind_param($stmt, "ii", $tid, $cid);
     mysqli_stmt_execute($stmt); //執行SQL
-    $result = mysqli_stmt_get_result($stmt); 
-    return $result;
+    $result = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt)); 
+    $period = $result['currentperiod'];
+    return $period;
 }
-function updateinit($cid,$inventory) {
+function updateinit($tid,$cid,$inventory) { // 修改初期
     global $db;
     $currentcost = $inventory;
-    $sql = "update orderform set inventory = ? ,currentcost = ?,complete = 1 where cid = ? and term = 0";
+    $sql = "update orderform set inventory = ? ,currentcost = ?,complete = 1 
+    where tid = ? and cid = ? and period = 0";
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "iii", $inventory, $currentcost, $cid);
+    mysqli_stmt_bind_param($stmt, "iiii", $inventory, $currentcost, $tid, $cid);
     mysqli_stmt_execute($stmt); 
     return;
 }
-function updatedata($cid,$quantity,$term) {
+function update($tid,$cid,$quantity,$period) { // 修改訂購量
     global $db;
-    if ($term < 2) {
-        $sql = "update orderform set quantity = ? ,complete = 1 where cid = ? and term = ?";
-        $stmt = mysqli_prepare($db, $sql);
-        mysqli_stmt_bind_param($stmt, "iii", $quantity, $cid, $term);
-    } else {
-        $arr = mysqli_fetch_assoc(updatearr($cid, $term));
-        $sql = "update orderform set quantity = ?, arrival = ?,complete = 1 where cid = ? and term = ?";
-        $stmt = mysqli_prepare($db, $sql);
-        mysqli_stmt_bind_param($stmt, "iiii", $quantity, $arr["quantity"], $cid, $term);
+    $sql = "update orderform set quantity = ?,complete = 1 
+    where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iiii", $quantity, $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); 
+    return;
+}
+function updatedata($tid,$cid,$period) { // 修改其他數值
+    global $db;
+    updatearr($tid,$cid,$period);
+    updatedemand($tid,$cid,$period);
+    updateinventory($tid,$cid,$period);
+    updatesales($tid,$cid,$period);
+    updatecost($tid,$cid,$period);
+    return;
+}
+function updatearr($tid,$cid,$period) { // 修改到貨量
+    global $db;
+    if ($cid == 1) {
+        $sql = "select quantity as arr from orderform 
+        where tid = ? and cid = ? and period = ? - 2";
+    } else { // 
+        $sql = "select sales as arr from orderform 
+        where tid = ? and cid = ? - 1 and period = ?";
     }
-    
+    $stmt = mysqli_prepare($db, $sql); 
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt);
+    $arr = mysqli_fetch_assoc($result);
+    if ($period >= 2) {
+        $sql = "update orderform set arrival = ? 
+        where tid = ? and cid = ? and period = ?";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, "iiii", $arr['arr'],
+        $tid, $cid, $period);
+    } else {
+        $sql = "update orderform set arrival = 0 
+        where tid = ? and cid = ? and period = ?";
+        $stmt = mysqli_prepare($db, $sql);
+        mysqli_stmt_bind_param($stmt, "iii",
+        $tid, $cid, $period);
+    }
     mysqli_stmt_execute($stmt); 
     return;
 }
-function updatearr($cid,$term) {
+function updatedemand($tid,$cid,$period) { // 修改需求
     global $db;
-    $sql = "select quantity from orderform where cid = ? and term = ? - 2";
-    $stmt = mysqli_prepare($db, $sql); 
-    mysqli_stmt_bind_param($stmt, "ii", $cid, $term);
+    if ($cid == 4) {
+        $sql = "select need as demand from need where period = ?";
+        $stmt = mysqli_prepare($db, $sql); 
+        mysqli_stmt_bind_param($stmt, "i", $period);
+    } else {
+        $sql = "select quantity as demand from orderform 
+        where tid = ? and cid = ? + 1 and period = ?";
+        $stmt = mysqli_prepare($db, $sql); 
+        mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    }
     mysqli_stmt_execute($stmt); //執行SQL
     $result = mysqli_stmt_get_result($stmt); 
-    return $result;
+    $demand = mysqli_fetch_assoc($result);
+    $sql = "update orderform set demand = ? 
+    where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iiii", $demand['demand'],
+    $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); 
+    return;
+}
+function updateinventory($tid,$cid,$period) { // 修改庫存<0表欠貨，新庫存=舊庫存+到貨-訂單-欠貨
+    global $db;
+    $sql = "select inventory from orderform where tid = ? and cid = ? and period = ? - 1";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid,$period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt);
+    $lastinv = mysqli_fetch_assoc($result);
+    $sql = "select arrival, demand from orderform where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid,$period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt);
+    $tmp = mysqli_fetch_assoc($result);
+    $currentinv = $lastinv['inventory'] - $tmp['demand'] + $tmp['arrival'];
+    $sql = "update orderform set inventory = ? 
+    where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iiii", $currentinv,
+    $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); 
+    return;
+}
+function updatesales($tid,$cid,$period) { // 修改銷貨量
+    global $db;
+    $sql = "select inventory, demand, arrival from orderform where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt);
+    $current = mysqli_fetch_assoc($result);
+    $sql = "select inventory from orderform where tid = ? and cid = ? and period = ? - 1";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $rs = mysqli_stmt_get_result($stmt);
+    $last = mysqli_fetch_assoc($rs);
+    if ($last['inventory'] < 0) { 
+        if ($current['inventory'] < 0) {
+            $sales = $current['arrival'];
+        } else {
+            $sales = $current['arrival'] - $current['inventory'];
+        }
+    } else {
+        if ($current['inventory'] < 0) {
+            $sales = $last['inventory'] + $current['arrival'];
+        } else {
+            $sales = $last['inventory'] + $current['arrival'] - $current['inventory'];
+        }
+    }
+    $sql = "update orderform set sales = ? 
+    where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iiii", $sales,
+    $tid, $cid, $period);
+    return;
+}
+function updatecost($tid,$cid,$period) { // 修改當其成本
+    global $db;
+    $sql = "select inventory from orderform where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt); 
+    $inventory = mysqli_fetch_assoc($result);
+    if ($inventory['inventory'] < 0) { // 欠貨
+        $sql = "select (inventory*(-2)) as cost from orderform 
+        where tid = ? and cid = ? and period = ?";
+    } else {
+        $sql = "select (inventory*1) as cost from orderform 
+        where tid = ? and cid = ? and period = ?";
+    }
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $rs = mysqli_stmt_get_result($stmt); 
+    $cost = mysqli_fetch_assoc($rs);
+    $sql = "update orderform set currentcost = ? 
+    where tid = ? and cid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "iiii", $cost['cost'],
+    $tid, $cid, $period);
+    mysqli_stmt_execute($stmt); 
+    return;
 }
 ?>

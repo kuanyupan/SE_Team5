@@ -2,9 +2,10 @@
     require_once("orderModel.php");
     global $db;
     $cid = 1;
-    $currentperiod = term($cid)+1;
+    $tid = 1;
+    $currentperiod = period($tid,$cid);
     $character = "factory";// 先假設為工廠
-    ?>
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +27,7 @@
             <a href="#" class="list-group-item" font-size="12pt" color="darkcyan">Menu</a>
             <a href="#" class="list-group-item list-group-item-action">回主選單</a>
             <a href="#" class="list-group-item list-group-item-action">離開遊戲</a>
+            <!-- <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a> -->
         </div>
     </div>
     <div id="name">
@@ -50,18 +52,8 @@
                 </form>
             </div>
             <div class="col-sm" id="figure">
-                <?php
-                    $result = ordList($cid);
-                    $sumcost = 0;
-                    while ($rs1 = mysqli_fetch_assoc($result)) {
-                        $sumcost += $rs1['currentcost'];
-                    }
-                    if($sumcost < 0) {
-                        echo "<img src='angry.png'\ height=\"250\">";
-                    }else{
-                        echo "<img src='smile.png'\ height=\"250\">";
-                    }
-                    ?>
+                <img src="smile.png" height="250">
+                <!-- <img src="angry.png" height="250"> -->
                 <div id="box"></div>
             </div>
         </div>
@@ -88,7 +80,7 @@
             </thead>
             <tbody>
                 <?php
-                    $result = ordList($cid);
+                    $result = ordList($tid,$cid);
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
                         $cumulativecost += $rs['currentcost'];

@@ -1,11 +1,11 @@
 <?php
 require_once("orderModel.php");
-
+$tid = 1;
 $cid = 1;
 $quantity = (int)$_POST['num'];
-$term = mysqli_fetch_assoc(term($cid));
-$currentTerm = $term['currentTerm'];
-updatedata($cid,$quantity,$currentTerm);
-addOrder($cid,$currentTerm+1);
+$currentTerm = period($tid,$cid);
+update($tid,$cid,$quantity,$currentTerm);
+addOrder($tid,$cid,$currentTerm+1);
+updatedata($tid,$cid,$currentTerm+1);
 header("Location: orderView.php");
 ?>
