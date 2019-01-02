@@ -24,44 +24,46 @@ $result=getTeamList();
 require('dbconfig.php');
 $role = $_POST['role'];
 $tid = $_GET['tid'];
+$tname = $_GET['teamname'];
 // $teamname = $_GET['teamname'];
-$uid = 002;
+$uid = 005;
 while($rs = mysqli_fetch_assoc($result)) {
+	
 	if ($role == 1 && $rs['f'] == 0 && $rs['tid'] == $tid) {
 		$sql = "update team set f = $uid where tid=$tid";
 		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 		mysqli_stmt_execute($stmt);  //執行SQL
-		echo "role1 added.";
-		header("refresh:1 ; url=teamView.php");
+		echo "Factory added.";
+		header("refresh:1 ; url=waitingView.php?tid=$tid&tname=$tname");
 	} else if ($role == 1 && $rs['f'] != 0 && $rs['tid'] == $tid){
-		echo "role1 isn't empty, please choose again.";
+		echo "Factory isn't empty, please choose again.";
 		header("refresh:1 ; url=teamView.php");
 	} else if ($role == 2 && $rs['d'] == 0 && $rs['tid'] == $tid) {
 		$sql = "update team set d = $uid where tid=$tid";
 		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 		mysqli_stmt_execute($stmt);  //執行SQL
-		echo "role2 added.";
-		header("refresh:1 ; url=teamView.php");
+		echo "Distributor added.";
+		header("refresh:1 ; url=waitingView.php?tid=$tid&tname=$tname");
 	} else if ($role == 2 && $rs['d'] != 0 && $rs['tid'] == $tid) {
-		echo "role2 isn't empty, please choose again.";
+		echo "Distributor isn't empty, please choose again.";
 		header("refresh:1 ; url=teamView.php");
 	} else if ($role == 3 && $rs['w'] == 0 && $rs['tid'] == $tid) {
 		$sql = "update team set w = $uid where tid=$tid";
 		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 		mysqli_stmt_execute($stmt);  //執行SQL
-		echo "role3 added.";
-		header("refresh:1 ; url=teamView.php");
+		echo "Wholesaler added.";
+		header("refresh:1 ; url=waitingView.php?tid=$tid&tname=$tname");
 	} else if ($role == 3 && $rs['w'] != 0 && $rs['tid'] == $tid) {
-		echo "role3 isn't empty, please choose again.";
+		echo "Wholesaler isn't empty, please choose again.";
 		header("refresh:1 ; url=teamView.php");
 	} else if ($role == 4 && $rs['r'] == 0 && $rs['tid'] == $tid) {
 		$sql = "update team set r = $uid where tid=$tid";
 		$stmt = mysqli_prepare($db, $sql); //prepare sql statement
 		mysqli_stmt_execute($stmt);  //執行SQL
-		echo "role4 added.";
-		header("refresh:1 ; url=teamView.php");
+		echo "Retailer added.";
+		header("refresh:1 ; url=waitingView.php?tid=$tid&tname=$tname");
 	} else if ($role == 4 && $rs['r'] != 0 && $rs['tid'] == $tid) {
-		echo "role4 isn't empty, please choose again.";
+		echo "Retailer isn't empty, please choose again.";
 		header("refresh:1 ; url=teamView.phps");
 	}
 }
