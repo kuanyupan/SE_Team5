@@ -1,26 +1,84 @@
 @charset "utf-8";
 
-table.settable{
+body{
+  background-image:url(background02.jpg);
 
+}
+th{
+  color: rgb(215, 223, 123);
+}
+h1
+  {
+    color: rgb(128, 215, 41);
+  position:relative;
+  left:550px;
+  top:23px;
+  }
+input[type=number] {
+  width: 70px;
+  line-height: 28px;
+  padding: 20px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  background-color: rgb(217, 218, 174) ;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+table{
+float: left;
   width: 80%;
-	border: #f6bb9e 2px solid;
+	border: none;
 	border-collapse: collapse;
 
 
 }
+table::after{
+  clear: left;
+}
+.settable input:focus{
 
-.settable input{
-
-
-
+  background-color: rgb(186, 106, 191) ;
 
 
 
 }
-.settable input:focus{
 
-  background-color: rgb(217, 218, 174) ;
+.rainbow-button {
+  float: right;
+  width:calc(10vw + 6px);
+  height:calc(8vw + 6px);
+  background-image: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+  border-radius:5px;
+  display:flex;
+  margin-right: 50px;
+  margin-bottom: 15px;
 
+  justify-content:center;
+  text-transform:uppercase;
+  font-size:2vw;
+  font-weight:bold;
+}
+#not{
+  clear: both;
+}
+.rainbow-button:after {
+  content:attr(alt);
+  width:20vw;
+  height:8vw;
+  background-color:#191919;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.rainbow-button:hover {
+  animation:slidebg 2s linear infinite;
+}
 
-
+@keyframes slidebg {
+  to {
+    background-position:20vw;
+  }
 }
