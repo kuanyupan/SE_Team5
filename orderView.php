@@ -52,8 +52,18 @@
                 </form>
             </div>
             <div class="col-sm" id="figure">
-                <img src="smile.png" height="250">
-                <!-- <img src="angry.png" height="250"> -->
+                <?php
+                    $result = ordList($tid,$cid);
+                    $sumcost = 0;
+                    while ($rs1 = mysqli_fetch_assoc($result)) {
+                        $sumcost += $rs1['currentcost'];
+                    }
+                    if($sumcost < 0) {
+                        echo "<img src='angry.png'\ height=\"250\">";
+                    }else{
+                        echo "<img src='smile.png'\ height=\"250\">";
+                    }
+                    ?>
                 <div id="box"></div>
             </div>
         </div>
