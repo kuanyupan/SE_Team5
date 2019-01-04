@@ -11,7 +11,7 @@
 <hr />
 <?php
 
-require('dbconfig.php');
+require_once('dbconfig.php');
 require('teamModel.php');
 $result=getTeamList();
 $rs = mysqli_fetch_assoc($result);
@@ -20,7 +20,7 @@ $role=$_POST['role'];
 $name=$_POST['name'];
 // $tid=$rs['tid'];
 // $tname=$rs['tname'];
-
+$uid = $_SESSION['uid'];
 if ($name && $role) {
     if($role == 1) {
         $sql = "insert into team (tname,f) values (?,?)";
