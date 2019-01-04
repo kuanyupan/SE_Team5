@@ -34,7 +34,7 @@ while($rs = mysqli_fetch_assoc($result)) {
         $tid = $_GET['tid'];
     ?>
 </h3>
-<form method="post" action="insertRole.php?tid=<?php echo "$tid"?>">
+<form method="post" action="insertRole.php?tid=<?php echo "$tid"?>&teamname=<?php echo "$teamname"?>">
     <p>
       <label>
         <input class="with-gap" name="role" type="radio" value="1" checked />
