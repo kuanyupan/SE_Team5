@@ -253,4 +253,12 @@ function cid($tid,$uid) {
         $cid = 4;
     return $cid;
 }
+function delete($tid,$cid) {
+    global $db;
+    $sql = "DELETE FROM `orderform` WHERE tid = ? and cid = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $tid, $cid);
+    mysqli_stmt_execute($stmt); //執行SQL
+    return;
+}
 ?>
