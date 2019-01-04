@@ -21,7 +21,11 @@ $result=getTeamList();
 
 <body>
 
-<h3>Beer-game</h3>
+<h3>Beer-game
+    <a href='edit.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">修改玩家資料
+        <i class="material-icons right">create</i>
+    </button></a>
+</h3>
 
 <table class="striped" >
   <tr>
