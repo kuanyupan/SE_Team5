@@ -1,10 +1,12 @@
 <?php
     require_once("orderModel.php");
     global $db;
-    $cid = 1;
-    $tid = 1;
+    $cid = $_REQUEST['cid'];
+    $tid = $_REQUEST['tid'];
+    $uid = $_REQUEST['uid'];
     $currentperiod = period($tid,$cid);
-    $character = "factory";// 先假設為工廠
+    $character = character($cid);// 先假設為工廠
+    $user = user($uid);
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,7 +33,7 @@
         </div>
     </div>
     <div id="name">
-        玩家: role <!-- <?php echo $role ?> -->
+        玩家: <?php echo $user ?> 
         角色: <?php echo $character ?>
     </div>
     <hr/>
@@ -45,27 +47,66 @@
             </div>
             <div class="col-sm" id="order">
                 第<?php echo $currentperiod; ?>/50期:<br />
-                <form method="post" action="order.php">
-                    訂購量:
-                    <input type="text" name="num"><br />
-                    <input type="submit" value="下單">
+                <?php
+                    echo "<form method='post' action='order.php?tid=$tid&uid=$uid&cid=$cid'>";
+                    if ($cid == 1) {
+                        if (check($tid,1,$currentperiod) == 0 && check($tid,2,$currentperiod -1) == 1 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod - 1) == 1) {
+                            echo "訂購量:
+                            <input type='text' name='num'><br />
+                            <input type='submit' value='下單'>";
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        } else {
+                            echo "wait";
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        }
+                    } else if ($cid == 2) {
+                        if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod) == 0 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod - 1) == 1) {
+                            echo "訂購量:
+                            <input type='text' name='num'><br />
+                            <input type='submit' value='下單'>";
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        } else {
+                            echo "wait";
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        }
+                    } else if ($cid == 3) {
+                        if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod - 1) == 1 && check($tid,3,$currentperiod) == 0 && check($tid,4,$currentperiod - 1) == 1) {
+                            echo "訂購量:
+                            <input type='text' name='num'><br />
+                            <input type='submit' value='下單'>";
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        } else {
+                            echo "wait";
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        }
+                    } else if ($cid == 4) {
+                        if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod - 1) == 1 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod) == 0) {
+                            echo "訂購量:
+                            <input type='text' name='num'><br />
+                            <input type='submit' value='下單'>";
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        } else {
+                            echo "wait";
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                        }
+                    }
+                    
+                    ?>
+                    
                 </form>
             </div>
             <div class="col-sm" id="figure">
-                <?php
-                    $result = ordList($tid,$cid);
-                    $sumcost = 0;
-                    while ($rs1 = mysqli_fetch_assoc($result)) {
-                        if($rs1['period'] > 0) {
-                            $sumcost += $rs1['currentcost'];
-                        }
-                    }
-                    if($sumcost < 0) {
-                        echo "<img src='angry.png'\ height=\"250\">";
-                    }else{
-                        echo "<img src='smile.png'\ height=\"250\">";
-                    }
-                    ?>
+                <?php 
+                $result = ordList($tid,$cid);
+                $inv = 0;
+                while ($rs = mysqli_fetch_assoc($result)) {
+                    $inv = $rs['inventory'];
+                }
+                if ($inv > 0)
+                    echo "<img src='smile.png' height='250'>";
+                else 
+                    echo "<img src='angry.png' height='250'>";
+                ?>
                 <div id="box"></div>
             </div>
         </div>
@@ -92,20 +133,33 @@
             </thead>
             <tbody>
                 <?php
+                    if ($currentperiod >= 2) {
+                        $p = $currentperiod - 1;
+                        while ($p <= $currentperiod) {
+                            updatedata($tid,$cid,$p);
+                            $p++;
+                        }
+                    } else {
+                        $p = 1;
+                        while ($p <= $currentperiod) {
+                            updatedata($tid,$cid,$p);
+                            $p++;
+                        }
+                    }
+                    
                     $result = ordList($tid,$cid);
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
-                        if($rs['period'] > 0) {
+                        if ($rs['period'] > 0)
                             $cumulativecost += $rs['currentcost'];
-                            echo "<tr><th scope='\row'\>" , $rs['period'] ,
-                            "</th><td>" , $rs['quantity'],
-                            "</td><td>" , $rs['arrival'],
-                            "</td><td>" , $rs['inventory'],
-                            "</td><td>" , $rs['demand'],
-                            "</td><td>" , $rs['currentcost'],
-                            "</td><td>" , $cumulativecost,
-                            "</td><td>" , $rs['sales'],"</td></tr>";
-                        }
+                        echo "<tr><th scope='\row'\>" , $rs['period'] ,
+                        "</th><td>" , $rs['quantity'],
+                        "</td><td>" , $rs['arrival'],
+                        "</td><td>" , $rs['inventory'],
+                        "</td><td>" , $rs['demand'],
+                        "</td><td>" , $rs['currentcost'],
+                        "</td><td>" , $cumulativecost,
+                        "</td><td>" , $rs['sales'],"</td></tr>";
                     }
                 ?>
             </tbody>
