@@ -49,19 +49,19 @@ $result = mysqli_stmt_get_result($stmt);
 $rs = mysqli_fetch_assoc($result);
 
     if($rs['f'])
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p1."'></td>";
+        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p1 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
     if($rs['d'] != null)
-        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p2."'></td>";
+        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p2 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
     if($rs['w'] != null)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p3."'></td>";
+        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p3 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
     if($rs['r'] != null)
-        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='".$p4."'></td>";
+        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p4 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
 ?>
