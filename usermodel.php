@@ -6,7 +6,7 @@ function login($id, $pwd)
     $_SESSION['uid'] = 0;
 	$_SESSION['role'] = '';
     if ($id> " ") {
-        $sql = "select * from user where loginID=? and password=?";
+        $sql = "select * from user where loginID=? and pwd=?";
         $stmt = mysqli_prepare($db, $sql);
         mysqli_stmt_bind_param($stmt, "ss", $id, $pwd);
         mysqli_stmt_execute($stmt); //執行SQL

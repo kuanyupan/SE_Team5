@@ -16,7 +16,7 @@ $fileContents = base64_encode($fileContents);
 $imgType=$_FILES["imgURL"]["type"];
 
 if($ID!='' ||$password!=''){
-    $sql = "INSERT INTO user (name,loginID,password,imgURL,imgType)
+    $sql = "INSERT INTO user (uname,loginID,pwd,imgURL,imgType)
         VALUES(?,?,?,?,?)";
     $stmt = mysqli_prepare($db, $sql);
     mysqli_stmt_bind_param($stmt, "sssss",

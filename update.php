@@ -11,14 +11,19 @@
 <hr />
 <?php
 require("dbconfig.php");
-
 $uid = $_SESSION['uid'];
-$loginID=$_POST['loginID'];
 $name=$_POST['name'];
 $pwd=$_POST['pwd'];
+    if ($name == ''){
+        $name = $tmpname;
+    }
+    if($pwd == ''){
+        $pwd =$tmppassword;
+    }
 
 //開啟圖片檔
 $file = fopen($_FILES["imgURL"]["tmp_name"], "rb");
+
 // 讀入圖片檔資料
 $fileContents = fread($file, filesize($_FILES["imgURL"]["tmp_name"])); 
  //關閉圖片檔
@@ -29,10 +34,17 @@ $fileContents = base64_encode($fileContents);
 $imgType=$_FILES["imgURL"]["type"];
 
 if ($uid>0) {
-    $sql = "update user set name=?, loginID=?, password=? ,imgURL=?,imgType=? where uid=?";
-    $stmt = mysqli_prepare($db,$sql);
-    mysqli_stmt_bind_param($stmt,"sssssi",$name,$loginID,$pwd,$fileContents,$imgType,$uid);
-    mysqli_stmt_execute($stmt); //執行SQL
+    if ($fileContents == ''){
+        $sql = "update user set uname=?, pwd=?  where uid=?";
+        $stmt = mysqli_prepare($db,$sql);
+        mysqli_stmt_bind_param($stmt,"ssi",$name,$pwd,$uid);
+        mysqli_stmt_execute($stmt); //執行SQL
+    }else{
+        $sql = "update user set uname=?, pwd=? ,imgURL=?,imgType=? where uid=?";
+        $stmt = mysqli_prepare($db,$sql);
+        mysqli_stmt_bind_param($stmt,"ssssi",$name,$pwd,$fileContents,$imgType,$uid);
+        mysqli_stmt_execute($stmt); //執行SQL
+    }
 	echo "message updated"; 
 } else echo "empty message id.";
 header("Location: teamView.php");

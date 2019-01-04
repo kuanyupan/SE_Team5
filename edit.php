@@ -29,23 +29,17 @@
 <form Enctype="multipart/form-data" method="post" action="update.php">  
   <tr>
     <td>name</td>
-    <td>loginID</td>
     <td>password</td>
     <td>修改大頭貼</td>
   </tr>
   <tr>
     <td>
-    <input type="hidden" name="uid" value="<?php echo $rs['uid']; ?>" />
-    <input type="text" name="name" value="<?php echo $rs['name']; ?>" placeholder="輸入姓名">
+    <input type="text" name="name" value="<?php echo $rs['uname']; ?>" placeholder="輸入姓名">
     </td>
     <td>
-    <input type="text" name="loginID" value="<?php echo $rs['loginID']; ?>"panel placeholder="輸入帳號">
+    <input type="text" name="pwd" value="<?php echo $rs['pwd']; ?>"panel placeholder="輸入密碼">
     </td>
     <td>
-    <input type="text" name="pwd" value="<?php echo $rs['password']; ?>"panel placeholder="輸入密碼">
-    </td>
-    <td>
-    原圖
     <?php 
     if ($rs['imgType'] =='') {
         echo '尚未匯入大頭貼!!';
