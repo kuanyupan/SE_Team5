@@ -31,7 +31,7 @@ $rs = mysqli_fetch_assoc($result)
     <!-- <td><img src="boy.png"></td> -->
   </tr>
 <?php
-require('dbconfig.php');
+require_once('dbconfig.php');
 
 $tid = $_GET['tid'];
 $tname = $_GET['tname'];

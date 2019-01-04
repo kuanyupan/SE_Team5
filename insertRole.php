@@ -21,12 +21,12 @@ $result=getTeamList();
 <h3>Insert role</h3>
 
 <?php
-require('dbconfig.php');
+require_once('dbconfig.php');
 $role = $_POST['role'];
 $tid = $_GET['tid'];
 $tname = $_GET['teamname'];
 // $teamname = $_GET['teamname'];
-
+$uid = $_SESSION['uid'];
 while($rs = mysqli_fetch_assoc($result)) {
 	
 	if ($role == 1 && $rs['f'] == 0 && $rs['tid'] == $tid) {
