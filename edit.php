@@ -21,13 +21,17 @@
         mysqli_stmt_execute($stmt); //執行 sql
         $result = mysqli_stmt_get_result($stmt); 
         if ($rs=mysqli_fetch_array($result)) {
+            $img = $rs['imgURL'];
+            //圖像解密(可直接echo)
+            $finalimg = '<img src="data:'.$rs['imgType'].';base64,' . $img . '" />';
 ?>
 <table width="200" border="1" class="">
-<form method="post" action="update.php">  
+<form Enctype="multipart/form-data" method="post" action="update.php">  
   <tr>
     <td>name</td>
     <td>loginID</td>
     <td>password</td>
+    <td>修改大頭貼</td>
   </tr>
   <tr>
     <td>
@@ -40,11 +44,19 @@
     <td>
     <input type="text" name="pwd" value="<?php echo $rs['password']; ?>"panel placeholder="輸入密碼">
     </td>
-    <!--
-    <input type="file" name="imgURL" value=""panel placeholder="上傳大頭貼">
-    -->
-</table>
-    <input type="submit" name="Submit" value="送出" />
+    <td>
+    原圖
+    <?php 
+    if ($rs['imgType'] =='') {
+        echo '尚未匯入大頭貼!!';
+    }else{
+        echo $finalimg; 
+    }
+    ?>
+    <input type="file" name="imgURL" >
+    </td>
+    </table>
+    <input type="submit" name="Submit" value="送出" >
     <input type="button"  value="取消" onclick="this.form.action='teamView.php';this.form.submit();"> 
     </form>
 <?php
