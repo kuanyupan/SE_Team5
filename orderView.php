@@ -56,7 +56,9 @@
                     $result = ordList($tid,$cid);
                     $sumcost = 0;
                     while ($rs1 = mysqli_fetch_assoc($result)) {
-                        $sumcost += $rs1['currentcost'];
+                        if($rs1['period'] > 0) {
+                            $sumcost += $rs1['currentcost'];
+                        }
                     }
                     if($sumcost < 0) {
                         echo "<img src='angry.png'\ height=\"250\">";
@@ -93,15 +95,17 @@
                     $result = ordList($tid,$cid);
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
-                        $cumulativecost += $rs['currentcost'];
-                        echo "<tr><th scope='\row'\>" , $rs['period'] ,
-                        "</th><td>" , $rs['quantity'],
-                        "</td><td>" , $rs['arrival'],
-                        "</td><td>" , $rs['inventory'],
-                        "</td><td>" , $rs['demand'],
-                        "</td><td>" , $rs['currentcost'],
-                        "</td><td>" , $cumulativecost,
-                        "</td><td>" , $rs['sales'],"</td></tr>";
+                        if($rs['period'] > 0) {
+                            $cumulativecost += $rs['currentcost'];
+                            echo "<tr><th scope='\row'\>" , $rs['period'] ,
+                            "</th><td>" , $rs['quantity'],
+                            "</td><td>" , $rs['arrival'],
+                            "</td><td>" , $rs['inventory'],
+                            "</td><td>" , $rs['demand'],
+                            "</td><td>" , $rs['currentcost'],
+                            "</td><td>" , $cumulativecost,
+                            "</td><td>" , $rs['sales'],"</td></tr>";
+                        }
                     }
                 ?>
             </tbody>
