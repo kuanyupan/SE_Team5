@@ -26,7 +26,7 @@ $role = $_POST['role'];
 $tid = $_GET['tid'];
 $tname = $_GET['teamname'];
 // $teamname = $_GET['teamname'];
-$uid = 005;
+
 while($rs = mysqli_fetch_assoc($result)) {
 	
 	if ($role == 1 && $rs['f'] == 0 && $rs['tid'] == $tid) {

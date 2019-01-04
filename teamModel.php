@@ -87,5 +87,14 @@ function getRole4Img(int $tid)
         }
     }
 }
+// function start() {
+//     $result = getTeamList();
+//     while($rs = mysqli_fetch_assoc($result)) {
+//         if($rs['f'] != null && $rs['d'] != null && $rs['w'] != null && $rs['r'] != null)
+//             header(Location:"init.php");
+            
+//     }
+// }
+
 
 ?>

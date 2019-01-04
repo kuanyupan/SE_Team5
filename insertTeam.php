@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>µL¼ÐÃD¤å¥ó</title>
+<title>ï¿½Lï¿½ï¿½ï¿½Dï¿½ï¿½ï¿½</title>
 </head>
 
 <body>
@@ -11,39 +11,50 @@
 <hr />
 <?php
 require('dbconfig.php');
+require('teamModel.php');
+$result=getTeamList();
+$rs = mysqli_fetch_assoc($result);
 global $db;
 $role=$_POST['role'];
 $name=$_POST['name'];
-$uid = 003;
+// $tid=$rs['tid'];
+// $tname=$rs['tname'];
+
 if ($name && $role) {
     if($role == 1) {
         $sql = "insert into team (tname,f) values (?,?)";
 	    $stmt = mysqli_prepare($db, $sql); //prepare sql statement
 	    mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
-	    mysqli_stmt_execute($stmt);  //°õ¦æSQL
+	    mysqli_stmt_execute($stmt);  //ï¿½ï¿½ï¿½ï¿½SQL
         echo "room added.";
-        header("refresh:1; url=teamView.php" );
+        $sql1 = "select * from team where tname='".$name."'";
+        $stmt1 = mysqli_prepare($db, $sql1);
+        mysqli_stmt_execute($stmt1); //åŸ·è¡ŒSQL
+        $result = mysqli_stmt_get_result($stmt1);
+        $rs1 = mysqli_fetch_assoc($result);
+        $tid = $rs1['tid'];
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$name" );
     } else if($role == 2) {
         $sql = "insert into team (tname,d) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
-        mysqli_stmt_execute($stmt);  //°õ¦æSQL
+        mysqli_stmt_execute($stmt);  //ï¿½ï¿½ï¿½ï¿½SQL
         echo "room added.";
-        header("refresh:1; url=teamView.php" );
+        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     } else if($role == 3) {
         $sql = "insert into team (tname,w) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
-        mysqli_stmt_execute($stmt);  //°õ¦æSQL
+        mysqli_stmt_execute($stmt);  //ï¿½ï¿½ï¿½ï¿½SQL
         echo "room added.";
-        header("refresh:1; url=teamView.php" );
+        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     } else {
         $sql = "insert into team (tname,r) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
-        mysqli_stmt_execute($stmt);  //°õ¦æSQL
+        mysqli_stmt_execute($stmt);  //ï¿½ï¿½ï¿½ï¿½SQL
         echo "room added.";
-        header("refresh:1; url=teamView.php" );
+        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     }
 	
     
