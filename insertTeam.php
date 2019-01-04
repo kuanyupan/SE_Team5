@@ -10,6 +10,7 @@
 <p>insert new room</p>
 <hr />
 <?php
+
 require('dbconfig.php');
 require('teamModel.php');
 $result=getTeamList();
@@ -40,21 +41,39 @@ if ($name && $role) {
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
         mysqli_stmt_execute($stmt);  //����SQL
         echo "room added.";
-        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        $sql1 = "select * from team where tname='".$name."'";
+        $stmt1 = mysqli_prepare($db, $sql1);
+        mysqli_stmt_execute($stmt1); //執行SQL
+        $result = mysqli_stmt_get_result($stmt1);
+        $rs1 = mysqli_fetch_assoc($result);
+        $tid = $rs1['tid'];
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     } else if($role == 3) {
         $sql = "insert into team (tname,w) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
         mysqli_stmt_execute($stmt);  //����SQL
         echo "room added.";
-        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        $sql1 = "select * from team where tname='".$name."'";
+        $stmt1 = mysqli_prepare($db, $sql1);
+        mysqli_stmt_execute($stmt1); //執行SQL
+        $result = mysqli_stmt_get_result($stmt1);
+        $rs1 = mysqli_fetch_assoc($result);
+        $tid = $rs1['tid'];
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     } else {
         $sql = "insert into team (tname,r) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
         mysqli_stmt_bind_param($stmt, "si",$name,$uid); //bind parameters with variables
         mysqli_stmt_execute($stmt);  //����SQL
         echo "room added.";
-        // header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        $sql1 = "select * from team where tname='".$name."'";
+        $stmt1 = mysqli_prepare($db, $sql1);
+        mysqli_stmt_execute($stmt1); //執行SQL
+        $result = mysqli_stmt_get_result($stmt1);
+        $rs1 = mysqli_fetch_assoc($result);
+        $tid = $rs1['tid'];
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
     }
 	
     
