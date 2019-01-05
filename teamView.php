@@ -26,20 +26,18 @@ $result=getTeamList();
         <i class="material-icons right">create</i>
     </button></a>
 </h3>
-
-<table class="striped" >
-  <tr>
-    <td>Team name</td>
-    <td>Factory</td>
-    <td>Distributor</td>
-    <td>Wholesaler</td>
-    <td>Retailer</td>
-    <td></td>
-    <!-- <td><img src="boy.png"></td> -->
-  </tr>
+<table class='striped' >
+        <tr><td>Team name</td>
+        <td>Factory</td>
+        <td>Distributor</td>
+        <td>Wholesaler</td>
+        <td>Retailer</td>
+        <td></td></tr>
 <?php
+
+
 while ($rs = mysqli_fetch_assoc($result)) {
-    
+
     $p1 = getRole1Img($rs['tid']);
     $p2 = getRole2Img($rs['tid']);
     $p3 = getRole3Img($rs['tid']);
@@ -65,7 +63,8 @@ while ($rs = mysqli_fetch_assoc($result)) {
 
     $teamname = $rs['tname'];
     $tid = $rs['tid'];
-    echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
+    if($rs['tid']!= null)
+        echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
 }
 //echo '<td><a href="03.delete.php?id=', $rs['id'], '">刪</a> </td></tr>';
 // $id=$rs['prdID'];
