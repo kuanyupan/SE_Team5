@@ -47,7 +47,7 @@ if ($name && $role) {
         $result = mysqli_stmt_get_result($stmt1);
         $rs1 = mysqli_fetch_assoc($result);
         $tid = $rs1['tid'];
-        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$name" );
     } else if($role == 3) {
         $sql = "insert into team (tname,w) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
@@ -60,7 +60,7 @@ if ($name && $role) {
         $result = mysqli_stmt_get_result($stmt1);
         $rs1 = mysqli_fetch_assoc($result);
         $tid = $rs1['tid'];
-        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$name" );
     } else {
         $sql = "insert into team (tname,r) values (?,?)";
         $stmt = mysqli_prepare($db, $sql); //prepare sql statement
@@ -73,7 +73,7 @@ if ($name && $role) {
         $result = mysqli_stmt_get_result($stmt1);
         $rs1 = mysqli_fetch_assoc($result);
         $tid = $rs1['tid'];
-        header("refresh:1; url=waitingView.php?tid=$tid&tname=$tname" );
+        header("refresh:1; url=waitingView.php?tid=$tid&tname=$name" );
     }
 	
     

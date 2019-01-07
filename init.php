@@ -1,7 +1,8 @@
 <?php
   require_once("orderModel.php");
-  $tid = 1;
-  $uid = 1;
+  require_once("teamModel.php");
+  $uid = $_SESSION['uid'];
+  $tid = getTid($uid);
   $cid = cid($tid,$uid);
   delete($tid,$cid);
   addOrder($tid,$cid,0);

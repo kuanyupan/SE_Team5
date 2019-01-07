@@ -2,7 +2,11 @@
 require("teamModel.php");
 //checkLogin();
 $result=getTeamList();
-$rs = mysqli_fetch_assoc($result)
+while($rs = mysqli_fetch_assoc($result)) {
+    if($rs['full'] == 1) {
+        header("Location:init.php");
+    }
+}
 ?>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -32,7 +36,7 @@ $rs = mysqli_fetch_assoc($result)
   </tr>
 <?php
 require_once('dbconfig.php');
-
+$count = 0;
 $tid = $_GET['tid'];
 $tname = $_GET['tname'];
 echo "<tr><td>$tname" ;
@@ -47,23 +51,24 @@ $stmt = mysqli_prepare($db, $sql);
 mysqli_stmt_execute($stmt); //執行SQL
 $result = mysqli_stmt_get_result($stmt);
 $rs = mysqli_fetch_assoc($result);
-
-    if($rs['f'])
+    header("Refresh:2");
+    if($rs['f'] != 0)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p1 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['d'] != null)
+    if($rs['d'] != 0)
         echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p2 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['w'] != null)
+    if($rs['w'] != 0)
         echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p3 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['r'] != null)
+    if($rs['r'] != 0)
         echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p4 . "'></td>";
     else
         echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+
 ?>
 </table>
     

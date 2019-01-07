@@ -87,14 +87,34 @@ function getRole4Img(int $tid)
         }
     }
 }
-// function start() {
-//     $result = getTeamList();
-//     while($rs = mysqli_fetch_assoc($result)) {
-//         if($rs['f'] != null && $rs['d'] != null && $rs['w'] != null && $rs['r'] != null)
-//             header(Location:"init.php");
-            
-//     }
-// }
+function isFull() 
+{
+    global $db;
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
+        if($rs['f'] != 0 && $rs['d'] != 0 && $rs['w'] != 0 && $rs['r'] != 0) {
+            $sql = "update team set full = 1";
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_execute($stmt); //執行SQL
+        } 
+    }
+}
 
+function getTid(int $uid) 
+{
+    global $db;
+    $result = getTeamList();
+    while($rs = mysqli_fetch_assoc($result)) {
+        if($rs['f'] == $uid || $rs['d'] == $uid || $rs['w'] == $uid  || $rs['r'] == $uid ) {
+            $sql =  "select * from team where 1";
+            $stmt = mysqli_prepare($db, $sql);
+            //mysqli_stmt_bind_param($stmt, "ss", $id, $pwd);
+            mysqli_stmt_execute($stmt); //執行SQL
+            $result = mysqli_stmt_get_result($stmt);
+            $rs = mysqli_fetch_assoc($result);
+            return $rs['tid'];
+        }
+    }
+}
 
 ?>

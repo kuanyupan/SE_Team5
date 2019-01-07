@@ -66,9 +66,9 @@ while ($rs = mysqli_fetch_assoc($result)) {
 // echo " - <a href='04.editform.php?id=$id'>改</a> </td></tr>";
 ?>
 </table>
+<a href="setNeed.php"><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">setNeed</button></a>
+<a href="Start.php"><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">StartGame</button>
 
-<a href='setNeed.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">setNeed</button></a>
-<a href=''><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action" onclick="start()">StartGame</button></a>
 <!-- <a class="btn-floating btn-large waves-effect waves-light red lighten-2 right"><i class="material-icons">add</i></a> -->
 <!-- <a href="showOrder.php">show all orders</a> -->
 </body>
