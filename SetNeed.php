@@ -24,6 +24,7 @@ function rand()
           }
 
 }
+
 </SCRIPT>
 
 
@@ -160,12 +161,13 @@ function rand()
   </table>
 
 </br>
- <input class="rainbow-button" type="submit"></br>
+ <input class="rainbow-button" type="submit" "></br>
 
  <INPUT class="rainbow-button" TYPE="button" VALUE="Random " onClick="rand()"></br>
- <input class="rainbow-button" type ="button" onclick="javascript:location.href='teamView.php'" value="回到首頁"></input>
+ <input class="rainbow-button" type ="button" onclick="javascript:location.href='adminTeamView.php'" value="回上一頁"></input>
 
 </form>
+
 <p id="not"></p>
 </body>
 </html>
