@@ -5,10 +5,10 @@ $tid = $_REQUEST['tid'];
 $uid = $_SESSION['uid'];
 $currentTerm = period($tid,$cid);
 updatedata($tid,$cid,$currentTerm);
-if (checkcomplete($tid,$currentTerm) == 0) 
-  header("refresh: 1;url=waittoend.php?tid=$tid&cid=$cid");
-else 
+if (checkcomplete($tid,$currentTerm) == 4) 
   header("Location: gameover.php");
+else 
+  header("refresh: 1;url=waittoend.php?tid=$tid&cid=$cid");
 ?>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">

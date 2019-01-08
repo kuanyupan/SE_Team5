@@ -272,13 +272,13 @@ function checkcomplete($tid,$period) {
     $allok = 0;
     while($rs = mysqli_fetch_assoc($result)) {
         if ($rs['complete'] == 1 && $rs['cid'] == 1)
-            $allok = 1;
+            $allok++;
         if ($rs['complete'] == 1 && $rs['cid'] == 2)
-            $allok = 1; 
+            $allok++; 
         if ($rs['complete'] == 1 && $rs['cid'] == 3)
-            $allok = 1;
+            $allok++;
         if ($rs['complete'] == 1 && $rs['cid'] == 4)
-            $allok = 1;
+            $allok++;
     }
     return $allok;
 }
