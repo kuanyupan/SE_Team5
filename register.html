@@ -2,16 +2,43 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="list.css">
     <title>註冊頁面</title>
   </head>
   <body>
+    <h1 style="text-align: center;">註冊</h1>
+    <hr />
     <form Enctype="multipart/form-data" action="register.php" method="post">
-        <input type="text" name="name" value="" placeholder="輸入姓名">
-        <input type="text" name="loginID" value=""panel placeholder="輸入帳號">
-        <input type="text" name="password" value=""panel placeholder="輸入密碼">
-        <input type="file" name="imgURL" >
-        <input type="submit">
-        <input type="button"  value="取消" onclick="this.form.action='loginView.php';this.form.submit();"> 
+      <table>
+        <tr>
+          <th>name：</th>
+          <td>
+            <input type="text" name="name" value="" placeholder="輸入姓名">
+          </td>
+        </tr>
+        <tr>
+          <th>LoginID：</th>
+          <td>
+            <input type="text" name="loginID" value=""panel placeholder="輸入帳號">
+          </td>
+        </tr>
+        <tr>
+          <th>password：</th>
+          <td>
+            <input type="text" name="password" value=""panel placeholder="輸入密碼">
+          </td>
+        </tr>
+        <tr>
+          <th>大頭貼：</th>
+          <td>
+            <input type="file" name="imgURL" >
+          </td>
+        </tr>
+      </table>
+        <div style="text-align: center; padding:6px 6px 6px 12px;">
+          <input type="submit">
+          <input type="button"  value="取消" onclick="this.form.action='loginView.php';this.form.submit();"> 
+        </div>
     </form>
   </body>
 </html>
