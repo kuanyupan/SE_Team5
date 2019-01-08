@@ -25,6 +25,9 @@ $result=getTeamList();
     <a href='edit.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">修改玩家資料
         <i class="material-icons right">create</i>
     </button></a>
+    <a href='recordview.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">查看歷史記錄
+        <i class="material-icons right">create</i>
+    </button></a>
 </h3>
 <table class='striped' >
         <tr><td>Team name</td>
