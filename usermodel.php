@@ -36,4 +36,17 @@ function getCurrentUser()
 {
     return $_SESSION['uid'];
 }
+function getScore($uid)
+{
+    global $db;
+    $sql = "select score from user where uid=?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $uid);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt); 
+    $rs=mysqli_fetch_assoc($result);
+    $score = $rs['score'];
+    return $score;
+
+}
 ?>
