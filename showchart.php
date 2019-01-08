@@ -15,7 +15,6 @@ $cf = json_encode($cfactory);
 $result = distributor($tid);
 $counter = 0;
 $tmp = 0;
-
 while ($rs = mysqli_fetch_assoc($result)) {
     $tmp += $rs['currentcost'];
     $cdis[$counter] = $tmp;
