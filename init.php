@@ -10,5 +10,5 @@
   addOrder($tid,$cid,1);
   $currentTerm = period($tid,$cid);
   updatedata($tid,$cid,$currentTerm);
-  header("Location: orderView.php?tid=$tid&uid=$uid&cid=$cid");
+  header("Location: orderView.php?tid=$tid&cid=$cid");
 ?>

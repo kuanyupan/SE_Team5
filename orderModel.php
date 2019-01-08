@@ -261,4 +261,25 @@ function delete($tid,$cid) {
     mysqli_stmt_execute($stmt); //執行SQL
     return;
 }
+function checkcomplete($tid,$period) {
+    global $db;
+    $sql = "select * from orderform where tid = ? and period = ?";
+    $stmt = mysqli_prepare($db, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $tid, $period);
+    mysqli_stmt_execute($stmt); //執行SQL
+    $result = mysqli_stmt_get_result($stmt); 
+
+    $allok = 0;
+    while($rs = mysqli_fetch_assoc($result)) {
+        if ($rs['complete'] == 1 && $rs['cid'] == 1)
+            $allok = 1;
+        if ($rs['complete'] == 1 && $rs['cid'] == 2)
+            $allok = 1; 
+        if ($rs['complete'] == 1 && $rs['cid'] == 3)
+            $allok = 1;
+        if ($rs['complete'] == 1 && $rs['cid'] == 4)
+            $allok = 1;
+    }
+    return $allok;
+}
 ?>

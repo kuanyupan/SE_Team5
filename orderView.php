@@ -3,7 +3,7 @@
     global $db;
     $cid = $_REQUEST['cid'];
     $tid = $_REQUEST['tid'];
-    $uid = $_REQUEST['uid'];
+    $uid = $_SESSION['uid'];
     $currentperiod = period($tid,$cid);
     $character = character($cid);// 先假設為工廠
     $user = user($uid);
@@ -48,46 +48,46 @@
             <div class="col-sm" id="order">
                 第<?php echo $currentperiod; ?>/50期:<br />
                 <?php
-                    echo "<form method='post' action='order.php?tid=$tid&uid=$uid&cid=$cid'>";
+                    echo "<form method='post' action='order.php?tid=$tid&cid=$cid'>";
                     if ($cid == 1) {
                         if (check($tid,1,$currentperiod) == 0 && check($tid,2,$currentperiod -1) == 1 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod - 1) == 1) {
                             echo "訂購量:
                             <input type='text' name='num'><br />
                             <input type='submit' value='下單'>";
-                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         } else {
                             echo "wait";
-                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         }
                     } else if ($cid == 2) {
                         if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod) == 0 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod - 1) == 1) {
                             echo "訂購量:
                             <input type='text' name='num'><br />
                             <input type='submit' value='下單'>";
-                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         } else {
                             echo "wait";
-                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         }
                     } else if ($cid == 3) {
                         if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod - 1) == 1 && check($tid,3,$currentperiod) == 0 && check($tid,4,$currentperiod - 1) == 1) {
                             echo "訂購量:
                             <input type='text' name='num'><br />
                             <input type='submit' value='下單'>";
-                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         } else {
                             echo "wait";
-                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         }
                     } else if ($cid == 4) {
                         if (check($tid,1,$currentperiod - 1) == 1 && check($tid,2,$currentperiod - 1) == 1 && check($tid,3,$currentperiod - 1) == 1 && check($tid,4,$currentperiod) == 0) {
                             echo "訂購量:
                             <input type='text' name='num'><br />
                             <input type='submit' value='下單'>";
-                            header('refresh: 15;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 15;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         } else {
                             echo "wait";
-                            header('refresh: 1;url="orderView.php?tid='.$tid.'&uid='.$uid.'&cid='.$cid.'"');
+                            header('refresh: 1;url="orderView.php?tid='.$tid.'&cid='.$cid.'"');
                         }
                     }
                     
