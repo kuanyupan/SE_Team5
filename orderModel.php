@@ -92,24 +92,29 @@ function updatearr($tid,$cid,$period) { // 修改到貨量
 }
 function updatedemand($tid,$cid,$period) { // 修改需求
     global $db;
-    if ($cid == 4) {
-        $sql = "select need as demand from need where period = ?";
-        $stmt = mysqli_prepare($db, $sql); 
-        mysqli_stmt_bind_param($stmt, "i", $period);
+    if ($period == 0) {
+        $dem = 0;
     } else {
-        $sql = "select quantity as demand from orderform 
-        where tid = ? and cid = ? and period = ?";
-        $c = $cid + 1;
-        $stmt = mysqli_prepare($db, $sql); 
-        mysqli_stmt_bind_param($stmt, "iii", $tid, $c, $period);
+        if ($cid == 4) {
+            $sql = "select need as demand from need where period = ? - 1";
+            $stmt = mysqli_prepare($db, $sql); 
+            mysqli_stmt_bind_param($stmt, "i", $period);
+        } else {
+            $sql = "select quantity as demand from orderform 
+            where tid = ? and cid = ? and period = ? - 1";
+            $c = $cid + 1;
+            $stmt = mysqli_prepare($db, $sql); 
+            mysqli_stmt_bind_param($stmt, "iii", $tid, $c, $period);
+        }
+        mysqli_stmt_execute($stmt); //執行SQL
+        $result = mysqli_stmt_get_result($stmt); 
+        $demand = mysqli_fetch_assoc($result);
+        $dem = $demand['demand'];
     }
-    mysqli_stmt_execute($stmt); //執行SQL
-    $result = mysqli_stmt_get_result($stmt); 
-    $demand = mysqli_fetch_assoc($result);
     $sql = "update orderform set demand = ? 
     where tid = ? and cid = ? and period = ?";
     $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param($stmt, "iiii", $demand['demand'],
+    mysqli_stmt_bind_param($stmt, "iiii", $dem,
     $tid, $cid, $period);
     mysqli_stmt_execute($stmt); 
     return;
