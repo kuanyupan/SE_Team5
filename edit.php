@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>無標題文件</title>
+<title>修改資料</title>
+<link rel="stylesheet" type="text/css" href="list.css">
 
 </head>
 <body>
@@ -11,10 +12,10 @@
     require("editmodel.php");
     require("usermodel.php");
     $uid=$_SESSION['uid'];
-    if ($uid <=0) {
-	echo "empty ID";
-	exit(0);
-}
+    //if ($uid <=0) {
+	//echo "empty ID";
+	//exit(0);
+
     $sql = "select * from user where uid=?;";
         $stmt = mysqli_prepare($db, $sql );
         mysqli_stmt_bind_param($stmt, "i", $uid);
@@ -24,13 +25,16 @@
             $img = $rs['imgURL'];
             //圖像解密(可直接echo)
             $finalimg = '<img src="data:'.$rs['imgType'].';base64,' . $img . '" />';
+        } else{
+            echo "cannot find the message to edit.";
+        }
 ?>
 <table width="200" border="1" class="">
 <form Enctype="multipart/form-data" method="post" action="update.php">  
   <tr>
-    <td>name</td>
-    <td>password</td>
-    <td>修改大頭貼</td>
+    <th>name</th>
+    <th>password</th>
+    <th>修改大頭貼</th>
   </tr>
   <tr>
     <td>
@@ -50,11 +54,13 @@
     <input type="file" name="imgURL" >
     </td>
     </table>
+    <div style="text-align: center; padding:6px 6px 6px 12px;">
     <input type="submit" name="Submit" value="送出" >
     <input type="button"  value="取消" onclick="this.form.action='teamView.php';this.form.submit();"> 
+    </div>
     </form>
 <?php
-} else echo "cannot find the message to edit.";
+
 ?>
   </body>
 </html>
