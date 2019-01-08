@@ -5,7 +5,7 @@
     $tid = $_REQUEST['tid'];
     $uid = $_SESSION['uid'];
     $currentperiod = period($tid,$cid);
-    $character = character($cid);// 先假設為工廠
+    $character = character($cid);
     $user = user($uid);
 ?>
 <!DOCTYPE html>
@@ -27,9 +27,8 @@
         </div>
         <div class="list-group">
             <a href="#" class="list-group-item" font-size="12pt" color="darkcyan">Menu</a>
-            <a href="#" class="list-group-item list-group-item-action">回主選單</a>
-            <a href="#" class="list-group-item list-group-item-action">離開遊戲</a>
-            <!-- <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a> -->
+            <a href="teamView.php" class="list-group-item list-group-item-action">回主選單</a>
+            <a href="loginView.php" class="list-group-item list-group-item-action">離開遊戲</a>
         </div>
     </div>
     <div id="name">
