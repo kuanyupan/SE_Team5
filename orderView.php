@@ -150,16 +150,17 @@
                     $result = ordList($tid,$cid);
                     $cumulativecost = 0;
                     while ($rs = mysqli_fetch_assoc($result)) {
-                        if ($rs['period'] > 0)
+                        if ($rs['period'] > 0) {
                             $cumulativecost += $rs['currentcost'];
-                        echo "<tr><th scope='\row'\>" , $rs['period'] ,
-                        "</th><td>" , $rs['quantity'],
-                        "</td><td>" , $rs['arrival'],
-                        "</td><td>" , $rs['inventory'],
-                        "</td><td>" , $rs['demand'],
-                        "</td><td>" , $rs['currentcost'],
-                        "</td><td>" , $cumulativecost,
-                        "</td><td>" , $rs['sales'],"</td></tr>";
+                            echo "<tr><th scope='\row'\>" , $rs['period'] ,
+                            "</th><td>" , $rs['quantity'],
+                            "</td><td>" , $rs['arrival'],
+                            "</td><td>" , $rs['inventory'],
+                            "</td><td>" , $rs['demand'],
+                            "</td><td>" , $rs['currentcost'],
+                            "</td><td>" , $cumulativecost,
+                            "</td><td>" , $rs['sales'],"</td></tr>";
+                        }
                     }
                 ?>
             </tbody>
