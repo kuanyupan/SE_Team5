@@ -6,7 +6,7 @@ $uid = $_SESSION['uid'];
 $quantity = (int)$_POST['num'];
 $currentTerm = period($tid,$cid);
 update($tid,$cid,$quantity,$currentTerm);
-if ($currentTerm == 5) {
+if ($currentTerm == 50) {
   header("Location: waittoend.php?tid=$tid&cid=$cid");
 } else {
   addOrder($tid,$cid,$currentTerm+1);
