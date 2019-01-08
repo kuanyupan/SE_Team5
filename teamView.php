@@ -45,29 +45,30 @@ while ($rs = mysqli_fetch_assoc($result)) {
     $p2 = getRole2Img($rs['tid']);
     $p3 = getRole3Img($rs['tid']);
     $p4 = getRole4Img($rs['tid']);
+    if($rs['full']!=1) {
+        echo "<tr><td>" , $rs['tname'];
+        if($rs['f'] != null)
+            echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p1 . "'></td>";
+        else
+            echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+        if($rs['d'] != null)
+            echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p2 . "'></td>";
+        else
+            echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+        if($rs['w'] != null)
+            echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p3 . "'></td>";
+        else
+            echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
+        if($rs['r'] != null)
+            echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p4 . "'></td>";
+        else
+            echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
 
-    echo "<tr><td>" , $rs['tname'];
-    if($rs['f'] != null)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p1 . "'></td>";
-    else
-        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['d'] != null)
-        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p2 . "'></td>";
-    else
-        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['w'] != null)
-        echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p3 . "'></td>";
-    else
-        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-    if($rs['r'] != null)
-        echo "<td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p4 . "'></td>";
-    else
-        echo "<td>", "<img class='circle responsive-img' width='100' height='100' src='https://image.flaticon.com/icons/svg/128/128469.svg'></td>";
-
-    $teamname = $rs['tname'];
-    $tid = $rs['tid'];
-    if($rs['tid']!= null)
-        echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
+        $teamname = $rs['tname'];
+        $tid = $rs['tid'];
+        if($rs['tid']!= null)
+            echo "<td><a href='add2team.php?teamname=$teamname&tid=$tid' class='btn-floating btn-large waves-effect waves-light teal lighten-2'><i class='material-icons'>add</i></a></td></tr>";
+    }
 }
 //echo '<td><a href="03.delete.php?id=', $rs['id'], '">刪</a> </td></tr>';
 // $id=$rs['prdID'];
