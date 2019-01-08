@@ -1,9 +1,11 @@
 <?php
 require_once("dbconfig.php");
+require_once("teamModel.php");
 require_once("usermodel.php");
 global $db;
-// $tid = $_GET['tid'];
-$sql = "select * from orderform where tid=6";
+$uid = $_SESSION['uid'];
+$getTid = getTid($uid);
+$sql = "select * from orderform where tid=$getTid";
 $stmt = mysqli_prepare($db, $sql);
 mysqli_stmt_execute($stmt); //執行SQL
 $result = mysqli_stmt_get_result($stmt);
@@ -16,10 +18,10 @@ while ($rs = mysqli_fetch_assoc($result)) {
     }
     
 }
-echo "$total";
+// echo "$total";
 
 // update總成本
-$sql1 = "update team set totalscore=$total where tid=6";
+$sql1 = "update team set totalscore=$total where tid=$getTid";
 $stmt1 = mysqli_prepare($db, $sql1); //prepare sql statement
 mysqli_stmt_execute($stmt1);  //執行SQL
 
@@ -42,14 +44,13 @@ $stmt4 = mysqli_prepare($db, $sql4); //prepare sql statement
 mysqli_stmt_execute($stmt4);  //執行SQL
 $result4 = mysqli_stmt_get_result($stmt4);// 組數
 $score=mysqli_fetch_array($result4);
-echo $score[0];
+// echo $score[0];
 // 
 $sql7 = "select * from team  order by rank";
 $stmt7 = mysqli_prepare($db, $sql7); //prepare sql statement
 mysqli_stmt_execute($stmt7);  //執行SQL
 $result7 = mysqli_stmt_get_result($stmt7);
 while($rs7 = mysqli_fetch_assoc($result7)) {
-    echo "hi";
     $tid = $rs7['tid'];
     // uid
     $sql6 = "select * from team where tid=?";
@@ -74,8 +75,8 @@ while($rs7 = mysqli_fetch_assoc($result7)) {
     // echo $rs6['r'];
     for($i=0; $i<=3; $i++){
         $getScore = getScore($uid[$i]);
-        echo $uid[$i];
-        echo $getScore;
+        // echo $uid[$i];
+        // echo $getScore;
         $sql5 = "update user set score=$getScore+? where uid= ?";
         $stmt5 = mysqli_prepare($db, $sql5); //prepare sql statement
         mysqli_stmt_bind_param($stmt5, "ii",$score[0], $uid[$i]);
