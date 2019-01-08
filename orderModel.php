@@ -60,9 +60,25 @@ function updatearr($tid,$cid,$period) { // 修改到貨量
     if ($cid == 1) {
         $sql = "select quantity as arr from orderform 
         where tid = ? and cid = ? and period = ?";
-        $p = $period - 2;
+        $p = $period - 3;
         $stmt = mysqli_prepare($db, $sql); 
         mysqli_stmt_bind_param($stmt, "iii", $tid, $cid, $p);
+        mysqli_stmt_execute($stmt); //執行SQL
+        $result = mysqli_stmt_get_result($stmt);
+        $arr = mysqli_fetch_assoc($result);
+        if ($period >= 3) {
+            $sql = "update orderform set arrival = ? 
+            where tid = ? and cid = ? and period = ?";
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_bind_param($stmt, "iiii", $arr['arr'],
+            $tid, $cid, $period);
+        } else {
+            $sql = "update orderform set arrival = 0 
+            where tid = ? and cid = ? and period = ?";
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_bind_param($stmt, "iii",
+            $tid, $cid, $period);
+        }
     } else { 
         $sql = "select sales as arr from orderform 
         where tid = ? and cid = ? and period = ?";
@@ -70,22 +86,22 @@ function updatearr($tid,$cid,$period) { // 修改到貨量
         $c = $cid - 1;
         $stmt = mysqli_prepare($db, $sql); 
         mysqli_stmt_bind_param($stmt, "iii", $tid, $c, $p);
-    }
-    mysqli_stmt_execute($stmt); //執行SQL
-    $result = mysqli_stmt_get_result($stmt);
-    $arr = mysqli_fetch_assoc($result);
-    if ($period >= 2) {
-        $sql = "update orderform set arrival = ? 
-        where tid = ? and cid = ? and period = ?";
-        $stmt = mysqli_prepare($db, $sql);
-        mysqli_stmt_bind_param($stmt, "iiii", $arr['arr'],
-        $tid, $cid, $period);
-    } else {
-        $sql = "update orderform set arrival = 0 
-        where tid = ? and cid = ? and period = ?";
-        $stmt = mysqli_prepare($db, $sql);
-        mysqli_stmt_bind_param($stmt, "iii",
-        $tid, $cid, $period);
+        mysqli_stmt_execute($stmt); //執行SQL
+        $result = mysqli_stmt_get_result($stmt);
+        $arr = mysqli_fetch_assoc($result);
+        if ($period >= 2) {
+            $sql = "update orderform set arrival = ? 
+            where tid = ? and cid = ? and period = ?";
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_bind_param($stmt, "iiii", $arr['arr'],
+            $tid, $cid, $period);
+        } else {
+            $sql = "update orderform set arrival = 0 
+            where tid = ? and cid = ? and period = ?";
+            $stmt = mysqli_prepare($db, $sql);
+            mysqli_stmt_bind_param($stmt, "iii",
+            $tid, $cid, $period);
+        }
     }
     mysqli_stmt_execute($stmt); 
     return;
