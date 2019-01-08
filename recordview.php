@@ -1,13 +1,13 @@
 <?php
 require("orderModel.php");
 require("userModel.php");
+require("teamModel.php");
 require_once("dbconfig.php");
 global $db;
-$cid = 1;
-$tid = 1;
 $uid = $_SESSION['uid'];
-//checkLogin();
-//$result=getrecord(getcurrentuser());
+$tid = getTid($uid);
+$cid = cid($tid,$uid);
+
 $result = ordList($tid,$cid);
 $cumulativecost = 0;
 
@@ -18,9 +18,9 @@ $sql1 = "select uname,tname from user u,team t where t.tid = u.tid and t.tid= ? 
     $result1 = mysqli_stmt_get_result($stmt1);
     
 
-$sql2 = "select cname from characters where cid = 1";
+$sql2 = "select cname from characters where cid = ?";
     $stmt2 = mysqli_prepare($db, $sql2);
-    //mysqli_stmt_bind_param($stmt2, "ii", $tid, $uid);
+    mysqli_stmt_bind_param($stmt2, "i", $cid);
     mysqli_stmt_execute($stmt2); //執行SQL
     $result2 = mysqli_stmt_get_result($stmt2);
 ?>
