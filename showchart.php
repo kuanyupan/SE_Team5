@@ -1,6 +1,11 @@
 <?php
 require("chartmodel.php");
-$tid = 1;
+require("teamModel.php");
+require("orderModel.php");
+require_once("dbconfig.php");
+require("userModel.php");
+$uid = $_SESSION['uid'];    
+$tid = getTid($uid);
 $result = factory($tid);
 $counter = 0;
 $tmp = 0;
@@ -21,6 +26,7 @@ while ($rs = mysqli_fetch_assoc($result)) {
     $counter++;
 }
 $cd = json_encode($cdis);
+
 $result = wholesaler($tid);
 $tmp = 0;
 $counter = 0;
@@ -30,6 +36,7 @@ while ($rs = mysqli_fetch_assoc($result)) {
     $counter++;
 }
 $cw = json_encode($cwhole);
+
 $result = retailer($tid);
 $counter = 0;
 $tmp = 0;
@@ -93,21 +100,41 @@ option = {
         {
             name:'factory',
             type:'line',
+            lineStyle: {
+                normal: {
+                    width: 5
+                }
+            },
             data:<?php echo $cf; ?>
         },
         {
             name:'distributor',
             type:'line',
+            lineStyle: {
+                normal: {
+                    width: 5
+                }
+            },
             data:<?php echo $cd; ?>
         },
         {
             name:'wholesaler',
             type:'line',
+            lineStyle: {
+                normal: {
+                    width: 5
+                }
+            },
             data:<?php echo $cw; ?>
         },
         {
             name:'retailer',
             type:'line',
+            lineStyle: {
+                normal: {
+                    width: 5
+                }
+            },
             data:<?php echo $cr; ?>
         },
     ]
