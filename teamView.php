@@ -45,7 +45,7 @@ while ($rs = mysqli_fetch_assoc($result)) {
     $p2 = getRole2Img($rs['tid']);
     $p3 = getRole3Img($rs['tid']);
     $p4 = getRole4Img($rs['tid']);
-    if($rs['full']!=1) {
+    if($rs['full']==0) {
         echo "<tr><td>" , $rs['tname'];
         if($rs['f'] != null)
             echo "</td><td>" , "<img class='circle responsive-img' width='100' height='100' src='data:;base64," . $p1 . "'></td>";
