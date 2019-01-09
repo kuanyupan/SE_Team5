@@ -39,6 +39,6 @@ echo $rank;
 require_once("showchart.php");
 ?>
 </div>
-
+<a href='teamView.php'><button class="btn waves-effect waves-light red lighten-2 right" type="submit" name="action">OK
 </body>
 </html>
