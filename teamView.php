@@ -45,6 +45,7 @@ while ($rs = mysqli_fetch_assoc($result)) {
     $p2 = getRole2Img($rs['tid']);
     $p3 = getRole3Img($rs['tid']);
     $p4 = getRole4Img($rs['tid']);
+    header("Refresh:2");
     if($rs['full']==0) {
         echo "<tr><td>" , $rs['tname'];
         if($rs['f'] != null)
